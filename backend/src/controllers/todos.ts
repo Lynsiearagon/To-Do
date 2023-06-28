@@ -2,7 +2,6 @@ import { RequestHandler } from "express";
 import ToDoModel from "../models/todo";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
-import todo from "../models/todo";
 
 
 // get all toDos
@@ -38,15 +37,19 @@ export const getToDo: RequestHandler = async (req, res, next) => {
 
 
 // post a toDo
-
+// establish interface for title and text being created
 interface CreateToDoBody {
     title?: string, 
     text?: string
 }
 
-
 // There are four arguments that get passed in to the Request Handler, all or nothing.
-export const createToDo: RequestHandler<unknown, unknown, CreateToDoBody, unknown> = async (req, res, next) => {
+export const createToDo: RequestHandler<
+    unknown, 
+    unknown, 
+    CreateToDoBody, 
+    unknown> = async (req, res, next) => {
+        
     const title = req.body.title;
     const text = req.body.text;
 
@@ -67,6 +70,9 @@ export const createToDo: RequestHandler<unknown, unknown, CreateToDoBody, unknow
 };
 
 
+
+// update ToDo by id
+// establish interfaces for update params, title, and text
 interface UpdateToDoParams {
     toDoId: string
 }
@@ -76,7 +82,6 @@ interface UpdateToDoBody {
     text?: string
 }
 
-// update ToDo by id
 export const updateToDo: RequestHandler<
     UpdateToDoParams, 
     unknown, 
