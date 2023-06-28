@@ -80,9 +80,10 @@ export const updateToDo: RequestHandler<
     UpdateToDoParams, 
     unknown, 
     UpdateToDoBody, 
-    unknown> = async (req, res, next) => {
+    unknown> 
+    = async (req, res, next) => {
     
-        const toDoId = req.params.toDoId;
+    const toDoId = req.params.toDoId;
     const newTitle = req.body.title;
     const newText = req.body.text;
 
@@ -107,6 +108,6 @@ export const updateToDo: RequestHandler<
         const updatedToDo = await toDo.save();
         res.status(200).json(updatedToDo);
     } catch (error) {
-        
+        next(error);
     }
-}
+};
