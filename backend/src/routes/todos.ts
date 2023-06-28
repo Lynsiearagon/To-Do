@@ -15,6 +15,9 @@ router.post("/", ToDoController.createToDo);
 // update todo
 router.patch("/:toDoId", ToDoController.updateToDo);
 
+// delete todo
+router.delete("/:toDoId", ToDoController.deleteToDo);
+
 
 
 export default router;

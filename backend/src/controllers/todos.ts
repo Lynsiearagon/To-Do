@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import ToDoModel from "../models/todo";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
+import todo from "../models/todo";
 
 
 // get all toDos
@@ -107,6 +108,31 @@ export const updateToDo: RequestHandler<
 
         const updatedToDo = await toDo.save();
         res.status(200).json(updatedToDo);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+// delete to do 
+export const deleteToDo: RequestHandler = async(req, res, next) => {
+    const toDoId = req.params.toDoId; 
+
+    try {
+        if (!mongoose.isValidObjectId(toDoId)) {
+            throw createHttpError(400, "Invalid To Do id.")
+        }
+
+        const toDo = await ToDoModel.findById(toDoId).exec();
+
+        if (!toDo) {
+            throw createHttpError(404, "To Do not found.");
+        }
+
+        await toDo.deleteOne();
+
+        res.sendStatus(204);
+        
     } catch (error) {
         next(error);
     }
