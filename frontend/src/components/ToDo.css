@@ -1,3 +1,4 @@
 .note-card {
     background-color: rgb(188, 239, 247);
+    white-space: pre-line;
 }
